@@ -1,0 +1,17 @@
+persistence:
+  enabled: true
+  storageClassName: ""
+  accessModes:
+    - ReadWriteOnce
+  size: 1Gi
+
+adminUser: admin
+adminPassword: admin
+
+service:
+  type: NodePort
+  nodePort: 32030
+  port: 3000
+
+env:
+  GF_PLUGINS_ALLOW_LOADING_UNSIGNED_PLUGINS: grafana-pyroscope-app,grafana-exploretraces-app,grafana-metricsdrilldown-app

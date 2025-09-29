@@ -1,0 +1,8 @@
+prometheus:
+  prometheusSpec:
+    serviceMonitorSelectorNilUsesHelmValues: false
+    scrapeInterval: 15s
+    additionalScrapeConfigs:
+      - job_name: "tec-test-app"
+        static_configs:
+          - targets: ["tec-test-service:80"]

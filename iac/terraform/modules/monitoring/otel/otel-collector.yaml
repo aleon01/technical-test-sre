@@ -1,0 +1,32 @@
+mode: deployment
+
+image:
+  repository: otel/opentelemetry-collector-contrib
+  tag: latest
+  pullPolicy: IfNotPresent
+
+config:
+  receivers:
+    otlp:
+      protocols:
+        grpc:
+          endpoint: 0.0.0.0:4317
+        http:
+          endpoint: 0.0.0.0:4318
+
+  exporters:
+    otlp/tempo:
+      endpoint: tempo.tec-test-ns.svc.cluster.local:4317
+      tls:
+        insecure: true
+
+    debug:
+      verbosity: detailed
+
+  service:
+    pipelines:
+      traces:
+        receivers: ["otlp"]
+        exporters: ["otlp/tempo", "debug"]
+
+replicaCount: 1

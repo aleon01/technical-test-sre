@@ -1,0 +1,483 @@
+{
+  "version": 4,
+  "terraform_version": "1.12.2",
+  "serial": 90,
+  "lineage": "444edd4f-94d3-f65a-c673-911cb8494067",
+  "outputs": {},
+  "resources": [
+    {
+      "mode": "managed",
+      "type": "kubernetes_namespace",
+      "name": "tec-test-ns",
+      "provider": "provider[\"registry.terraform.io/hashicorp/kubernetes\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "tec-test-ns",
+            "metadata": [
+              {
+                "annotations": null,
+                "generate_name": "",
+                "generation": 0,
+                "labels": null,
+                "name": "tec-test-ns",
+                "resource_version": "49272",
+                "uid": "8c9290a6-f869-48d2-8872-b107a11e0c51"
+              }
+            ],
+            "timeouts": null,
+            "wait_for_default_service_account": false
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 1,
+          "identity": {
+            "api_version": "v1",
+            "kind": "Namespace",
+            "name": "tec-test-ns"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiZGVsZXRlIjozMDAwMDAwMDAwMDB9fQ=="
+        }
+      ]
+    },
+    {
+      "module": "module.grafana_tempo",
+      "mode": "managed",
+      "type": "helm_release",
+      "name": "grafana",
+      "provider": "provider[\"registry.terraform.io/hashicorp/helm\"]",
+      "instances": [
+        {
+          "schema_version": 2,
+          "attributes": {
+            "atomic": false,
+            "chart": "grafana",
+            "cleanup_on_fail": false,
+            "create_namespace": false,
+            "dependency_update": false,
+            "description": null,
+            "devel": null,
+            "disable_crd_hooks": false,
+            "disable_openapi_validation": false,
+            "disable_webhooks": false,
+            "force_update": false,
+            "id": "grafana",
+            "keyring": null,
+            "lint": false,
+            "manifest": null,
+            "max_history": 0,
+            "metadata": {
+              "app_version": "12.1.1",
+              "chart": "grafana",
+              "first_deployed": 1758676759,
+              "last_deployed": 1758676759,
+              "name": "grafana",
+              "namespace": "tec-test-ns",
+              "notes": "1. Get your 'admin' user password by running:\n\n   kubectl get secret --namespace tec-test-ns grafana -o jsonpath=\"{.data.admin-password}\" | base64 --decode ; echo\n\n\n2. The Grafana server can be accessed via port 80 on the following DNS name from within your cluster:\n\n   grafana.tec-test-ns.svc.cluster.local\n\n   Get the Grafana URL to visit by running these commands in the same shell:\n     export POD_NAME=$(kubectl get pods --namespace tec-test-ns -l \"app.kubernetes.io/name=grafana,app.kubernetes.io/instance=grafana\" -o jsonpath=\"{.items[0].metadata.name}\")\n     kubectl --namespace tec-test-ns port-forward $POD_NAME 3000\n\n3. Login with the password from step 1 and the username: admin\n#################################################################################\n######   WARNING: Persistence is disabled!!! You will lose your data when   #####\n######            the Grafana pod is terminated.                            #####\n#################################################################################\n",
+              "revision": 1,
+              "values": "{\"persistence\":{\"enabled\":false}}",
+              "version": "10.0.0"
+            },
+            "name": "grafana",
+            "namespace": "tec-test-ns",
+            "pass_credentials": false,
+            "postrender": null,
+            "recreate_pods": false,
+            "render_subchart_notes": true,
+            "replace": false,
+            "repository": "https://grafana.github.io/helm-charts",
+            "repository_ca_file": null,
+            "repository_cert_file": null,
+            "repository_key_file": null,
+            "repository_password": null,
+            "repository_username": null,
+            "reset_values": false,
+            "reuse_values": false,
+            "set": [
+              {
+                "name": "persistence.enabled",
+                "type": "",
+                "value": "false"
+              }
+            ],
+            "set_list": null,
+            "set_sensitive": null,
+            "set_wo": null,
+            "set_wo_revision": null,
+            "skip_crds": false,
+            "status": "deployed",
+            "timeout": 300,
+            "values": null,
+            "verify": false,
+            "version": "10.0.0",
+            "wait": true,
+            "wait_for_jobs": false
+          },
+          "sensitive_attributes": [
+            [
+              {
+                "type": "get_attr",
+                "value": "repository_password"
+              }
+            ]
+          ],
+          "identity_schema_version": 0,
+          "identity": {
+            "namespace": "tec-test-ns",
+            "release_name": "grafana"
+          },
+          "dependencies": [
+            "kubernetes_namespace.tec-test-ns"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.prometheus",
+      "mode": "managed",
+      "type": "helm_release",
+      "name": "prometheus",
+      "provider": "provider[\"registry.terraform.io/hashicorp/helm\"]",
+      "instances": [
+        {
+          "schema_version": 2,
+          "attributes": {
+            "atomic": false,
+            "chart": "prometheus",
+            "cleanup_on_fail": false,
+            "create_namespace": false,
+            "dependency_update": false,
+            "description": null,
+            "devel": null,
+            "disable_crd_hooks": false,
+            "disable_openapi_validation": false,
+            "disable_webhooks": false,
+            "force_update": false,
+            "id": "prometheus",
+            "keyring": null,
+            "lint": false,
+            "manifest": null,
+            "max_history": 0,
+            "metadata": {
+              "app_version": "v3.6.0",
+              "chart": "prometheus",
+              "first_deployed": 1758676762,
+              "last_deployed": 1758676762,
+              "name": "prometheus",
+              "namespace": "tec-test-ns",
+              "notes": "1. Get the application URL by running these commands:\n  export POD_NAME=$(kubectl get pods --namespace tec-test-ns -l \"app.kubernetes.io/name=alertmanager,app.kubernetes.io/instance=prometheus\" -o jsonpath=\"{.items[0].metadata.name}\")\n  echo \"Visit http://127.0.0.1:9093 to use your application\"\n  kubectl --namespace tec-test-ns port-forward $POD_NAME 9093:80\n\nkube-state-metrics is a simple service that listens to the Kubernetes API server and generates metrics about the state of the objects.\nThe exposed metrics can be found here:\nhttps://github.com/kubernetes/kube-state-metrics/blob/master/docs/README.md#exposed-metrics\n\nThe metrics are exported on the HTTP endpoint /metrics on the listening port.\nIn your case, prometheus-kube-state-metrics.tec-test-ns.svc.cluster.local:8080/metrics\n\nThey are served either as plaintext or protobuf depending on the Accept header.\nThey are designed to be consumed either by Prometheus itself or by a scraper that is compatible with scraping a Prometheus client endpoint.\n\nThe Prometheus server can be accessed via port 80 on the following DNS name from within your cluster:\nprometheus-server.tec-test-ns.svc.cluster.local\n\n\nGet the Prometheus server URL by running these commands in the same shell:\n  export POD_NAME=$(kubectl get pods --namespace tec-test-ns -l \"app.kubernetes.io/name=prometheus,app.kubernetes.io/instance=prometheus\" -o jsonpath=\"{.items[0].metadata.name}\")\n  kubectl --namespace tec-test-ns port-forward $POD_NAME 9090\n\n\nThe Prometheus alertmanager can be accessed via port 9093 on the following DNS name from within your cluster:\nprometheus-alertmanager.tec-test-ns.svc.cluster.local\n\n\nGet the Alertmanager URL by running these commands in the same shell:\n  export POD_NAME=$(kubectl get pods --namespace tec-test-ns -l \"app.kubernetes.io/name=alertmanager,app.kubernetes.io/instance=prometheus\" -o jsonpath=\"{.items[0].metadata.name}\")\n  kubectl --namespace tec-test-ns port-forward $POD_NAME 9093\n#################################################################################\n######   WARNING: Pod Security Policy has been disabled by default since    #####\n######            it deprecated after k8s 1.25+. use                        #####\n######            (index .Values \"prometheus-node-exporter\" \"rbac\"          #####\n###### .          \"pspEnabled\") with (index .Values                         #####\n######            \"prometheus-node-exporter\" \"rbac\" \"pspAnnotations\")       #####\n######            in case you still need it.                                #####\n#################################################################################\n\n\nThe Prometheus PushGateway can be accessed via port 9091 on the following DNS name from within your cluster:\nprometheus-prometheus-pushgateway.tec-test-ns.svc.cluster.local\n\n\nGet the PushGateway URL by running these commands in the same shell:\n  export POD_NAME=$(kubectl get pods --namespace tec-test-ns -l \"app=prometheus-pushgateway,component=pushgateway\" -o jsonpath=\"{.items[0].metadata.name}\")\n  kubectl --namespace tec-test-ns port-forward $POD_NAME 9091\n\nFor more information on running Prometheus, visit:\nhttps://prometheus.io/\n\n1. Get the application URL by running these commands:\n  export POD_NAME=$(kubectl get pods --namespace tec-test-ns -l \"app.kubernetes.io/name=prometheus-pushgateway,app.kubernetes.io/instance=prometheus\" -o jsonpath=\"{.items[0].metadata.name}\")\n  kubectl port-forward $POD_NAME 9091\n  echo \"Visit http://127.0.0.1:9091 to use your application\"\n\n1. Get the application URL by running these commands:\n  export POD_NAME=$(kubectl get pods --namespace tec-test-ns -l \"app.kubernetes.io/name=prometheus-node-exporter,app.kubernetes.io/instance=prometheus\" -o jsonpath=\"{.items[0].metadata.name}\")\n  echo \"Visit http://127.0.0.1:9100 to use your application\"\n  kubectl port-forward --namespace tec-test-ns $POD_NAME 9100",
+              "revision": 1,
+              "values": "{\"extraArgs\":[\"--no-collector.logfile\"],\"hostRootFsMount\":{\"enabled\":false}}",
+              "version": "27.39.0"
+            },
+            "name": "prometheus",
+            "namespace": "tec-test-ns",
+            "pass_credentials": false,
+            "postrender": null,
+            "recreate_pods": false,
+            "render_subchart_notes": true,
+            "replace": false,
+            "repository": "https://prometheus-community.github.io/helm-charts",
+            "repository_ca_file": null,
+            "repository_cert_file": null,
+            "repository_key_file": null,
+            "repository_password": null,
+            "repository_username": null,
+            "reset_values": false,
+            "reuse_values": false,
+            "set": [
+              {
+                "name": "hostRootFsMount.enabled",
+                "type": "",
+                "value": "false"
+              },
+              {
+                "name": "extraArgs[0]",
+                "type": "",
+                "value": "--no-collector.logfile"
+              }
+            ],
+            "set_list": null,
+            "set_sensitive": null,
+            "set_wo": null,
+            "set_wo_revision": null,
+            "skip_crds": false,
+            "status": "deployed",
+            "timeout": 300,
+            "values": null,
+            "verify": false,
+            "version": "27.39.0",
+            "wait": true,
+            "wait_for_jobs": false
+          },
+          "sensitive_attributes": [
+            [
+              {
+                "type": "get_attr",
+                "value": "repository_password"
+              }
+            ]
+          ],
+          "identity_schema_version": 0,
+          "identity": {
+            "namespace": "tec-test-ns",
+            "release_name": "prometheus"
+          },
+          "dependencies": [
+            "kubernetes_namespace.tec-test-ns"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.python-app",
+      "mode": "managed",
+      "type": "kubernetes_deployment",
+      "name": "tec-test-deployment",
+      "provider": "provider[\"registry.terraform.io/hashicorp/kubernetes\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "id": "tec-test-ns/tec-test-deployment",
+            "metadata": [
+              {
+                "annotations": null,
+                "generate_name": "",
+                "generation": 1,
+                "labels": {
+                  "app": "tec-test-python"
+                },
+                "name": "tec-test-deployment",
+                "namespace": "tec-test-ns",
+                "resource_version": "49303",
+                "uid": "ebc23477-3a14-40bc-b8f4-112ec0706d99"
+              }
+            ],
+            "spec": [
+              {
+                "min_ready_seconds": 0,
+                "paused": false,
+                "progress_deadline_seconds": 600,
+                "replicas": "1",
+                "revision_history_limit": 10,
+                "selector": [
+                  {
+                    "match_expressions": [],
+                    "match_labels": {
+                      "app": "tec-test-python"
+                    }
+                  }
+                ],
+                "strategy": [
+                  {
+                    "rolling_update": [
+                      {
+                        "max_surge": "25%",
+                        "max_unavailable": "25%"
+                      }
+                    ],
+                    "type": "RollingUpdate"
+                  }
+                ],
+                "template": [
+                  {
+                    "metadata": [
+                      {
+                        "annotations": null,
+                        "generate_name": "",
+                        "generation": 0,
+                        "labels": {
+                          "app": "tec-test-python"
+                        },
+                        "name": "",
+                        "namespace": "",
+                        "resource_version": "",
+                        "uid": ""
+                      }
+                    ],
+                    "spec": [
+                      {
+                        "active_deadline_seconds": 0,
+                        "affinity": [],
+                        "automount_service_account_token": true,
+                        "container": [
+                          {
+                            "args": null,
+                            "command": null,
+                            "env": [],
+                            "env_from": [],
+                            "image": "technical-test:1.0.2",
+                            "image_pull_policy": "IfNotPresent",
+                            "lifecycle": [],
+                            "liveness_probe": [],
+                            "name": "tec-test-deployment",
+                            "port": [
+                              {
+                                "container_port": 8080,
+                                "host_ip": "",
+                                "host_port": 0,
+                                "name": "",
+                                "protocol": "TCP"
+                              }
+                            ],
+                            "readiness_probe": [],
+                            "resources": [
+                              {
+                                "limits": {},
+                                "requests": {}
+                              }
+                            ],
+                            "security_context": [],
+                            "startup_probe": [],
+                            "stdin": false,
+                            "stdin_once": false,
+                            "termination_message_path": "/dev/termination-log",
+                            "termination_message_policy": "File",
+                            "tty": false,
+                            "volume_device": [],
+                            "volume_mount": [],
+                            "working_dir": ""
+                          }
+                        ],
+                        "dns_config": [],
+                        "dns_policy": "ClusterFirst",
+                        "enable_service_links": true,
+                        "host_aliases": [],
+                        "host_ipc": false,
+                        "host_network": false,
+                        "host_pid": false,
+                        "hostname": "",
+                        "image_pull_secrets": [],
+                        "init_container": [],
+                        "node_name": "",
+                        "node_selector": null,
+                        "os": [],
+                        "priority_class_name": "",
+                        "readiness_gate": [],
+                        "restart_policy": "Always",
+                        "runtime_class_name": "",
+                        "scheduler_name": "default-scheduler",
+                        "security_context": [],
+                        "service_account_name": "",
+                        "share_process_namespace": false,
+                        "subdomain": "",
+                        "termination_grace_period_seconds": 30,
+                        "toleration": [],
+                        "topology_spread_constraint": [],
+                        "volume": []
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "timeouts": null,
+            "wait_for_rollout": true
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 1,
+          "identity": {
+            "api_version": "apps/v1",
+            "kind": "Deployment",
+            "name": "tec-test-deployment",
+            "namespace": "tec-test-ns"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDAsImRlbGV0ZSI6NjAwMDAwMDAwMDAwLCJ1cGRhdGUiOjYwMDAwMDAwMDAwMH0sInNjaGVtYV92ZXJzaW9uIjoiMSJ9",
+          "dependencies": [
+            "kubernetes_namespace.tec-test-ns"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.python-app",
+      "mode": "managed",
+      "type": "kubernetes_service",
+      "name": "tec-test-service",
+      "provider": "provider[\"registry.terraform.io/hashicorp/kubernetes\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "id": "tec-test-ns/tec-test-service",
+            "metadata": [
+              {
+                "annotations": null,
+                "generate_name": "",
+                "generation": 0,
+                "labels": null,
+                "name": "tec-test-service",
+                "namespace": "tec-test-ns",
+                "resource_version": "49277",
+                "uid": "661b2c2d-aa47-4454-a70d-053ed9184e60"
+              }
+            ],
+            "spec": [
+              {
+                "allocate_load_balancer_node_ports": true,
+                "cluster_ip": "10.105.124.201",
+                "cluster_ips": [
+                  "10.105.124.201"
+                ],
+                "external_ips": null,
+                "external_name": "",
+                "external_traffic_policy": "Cluster",
+                "health_check_node_port": 0,
+                "internal_traffic_policy": "Cluster",
+                "ip_families": [
+                  "IPv4"
+                ],
+                "ip_family_policy": "SingleStack",
+                "load_balancer_class": "",
+                "load_balancer_ip": "",
+                "load_balancer_source_ranges": null,
+                "port": [
+                  {
+                    "app_protocol": "",
+                    "name": "",
+                    "node_port": 30080,
+                    "port": 80,
+                    "protocol": "TCP",
+                    "target_port": "8080"
+                  }
+                ],
+                "publish_not_ready_addresses": false,
+                "selector": {
+                  "app": "tec-test-python"
+                },
+                "session_affinity": "None",
+                "session_affinity_config": [],
+                "type": "NodePort"
+              }
+            ],
+            "status": [
+              {
+                "load_balancer": [
+                  {
+                    "ingress": []
+                  }
+                ]
+              }
+            ],
+            "timeouts": null,
+            "wait_for_load_balancer": true
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 1,
+          "identity": {
+            "api_version": "v1",
+            "kind": "Service",
+            "name": "tec-test-service",
+            "namespace": "tec-test-ns"
+          },
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo2MDAwMDAwMDAwMDB9LCJzY2hlbWFfdmVyc2lvbiI6IjEifQ==",
+          "dependencies": [
+            "kubernetes_namespace.tec-test-ns"
+          ]
+        }
+      ]
+    }
+  ],
+  "check_results": null
+}
